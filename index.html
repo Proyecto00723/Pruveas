@@ -687,8 +687,30 @@ https://ejemplo.com/video.mp4"></textarea>
             </div>
         </div>
     </div>
+
+
+    <!-- Tu textarea -->
+    <textarea id="product-images"></textarea>
+
+    <button id="guardarBtn">Guardar</button>
+
+    <div id="productos"></div>
+
+    <script type="module">
+
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js"; import { getFirestore, collection, addDoc, getDocs } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js"; const firebaseConfig = { apiKey:
+        "AIzaSyCCDSrE_hWvYYgjNwTX85leeU3vHBLBJsY", authDomain: "stylishsteps-10fc4.firebaseapp.com", projectId: "stylishsteps-10fc4", }; const app = initializeApp(firebaseConfig); const db = getFirestore(app); document.getElementById("guardarBtn").addEventListener("click",
+        async () => { const urls = document.getElementById("product-images").value; await addDoc(collection(db, "productos"), { media: urls, fecha: new Date() }); alert("Guardado en Firebase 🔥"); cargarProductos(); }); async function cargarProductos()
+        { const querySnapshot = await getDocs(collection(db, "productos")); const contenedor = document.getElementById("productos"); contenedor.innerHTML = ""; querySnapshot.forEach(doc => { const data = doc.data(); contenedor.innerHTML += `
+        <div style="margin-bottom:20px;">
+            ${data.media.split("\n").map(url => { if(url.endsWith(".mp4")){ return `<video src="${url}" width="300" autoplay muted loop></video>`; } else { return `<img src="${url}" width="300">`; } }).join("")}
+        </div>
+        `; }); } cargarProductos();
+
+    </script>
+
+
     <script>
-        // Default configuration
         const defaultConfig = {
             store_name: 'My Style',
             welcome_text: 'Descubre tu estilo único',
@@ -723,7 +745,7 @@ https://ejemplo.com/video.mp4"></textarea>
         let editingProduct = null;
         const ADMIN_PASSWORD = '#@MyStyle20@#';
 
-        // Data SDK Handler
+
         const dataHandler = {
             onDataChanged(data) {
                 allData = data;
@@ -731,7 +753,7 @@ https://ejemplo.com/video.mp4"></textarea>
                 products = data.filter(item => item.type === 'product');
                 const settingsRecord = data.find(item => item.type === 'settings');
 
-                // Load settings from database if available
+
                 if (settingsRecord) {
                     config.store_name = settingsRecord.store_name || defaultConfig.store_name;
                     config.welcome_text = settingsRecord.welcome_text || defaultConfig.welcome_text;
@@ -742,7 +764,6 @@ https://ejemplo.com/video.mp4"></textarea>
                     config.agency_name = settingsRecord.agency_name || defaultConfig.agency_name;
                     config.shipping_template = settingsRecord.shipping_template || defaultConfig.shipping_template;
 
-                    // Update UI with loaded settings
                     updateUIWithSettings();
                 }
 
@@ -755,7 +776,7 @@ https://ejemplo.com/video.mp4"></textarea>
             }
         };
 
-        // Initialize Data SDK
+
         async function initDataSDK() {
             if (window.dataSdk) {
                 const result = await window.dataSdk.init(dataHandler);
@@ -765,12 +786,12 @@ https://ejemplo.com/video.mp4"></textarea>
             }
         }
 
-        // Format price
+
         function formatPrice(price) {
             return config.currency_symbol + price.toLocaleString('es-CO');
         }
 
-        // Update UI with settings
+
         function updateUIWithSettings() {
             const storeName = config.store_name || defaultConfig.store_name;
             const storeTitle = document.getElementById('store-title');
@@ -785,7 +806,7 @@ https://ejemplo.com/video.mp4"></textarea>
             document.getElementById('main-description').textContent = config.main_description || defaultConfig.main_description;
         }
 
-        // Render categories from collections
+
         function renderCategories() {
             const categoriesBar = document.getElementById('categories-bar');
 
@@ -816,7 +837,7 @@ https://ejemplo.com/video.mp4"></textarea>
             categoriesBar.innerHTML = categoriesHTML;
         }
 
-        // Render products
+
         function renderProducts() {
             const grid = document.getElementById('products-grid');
             const filteredProducts = currentCategory === 'all' ?
