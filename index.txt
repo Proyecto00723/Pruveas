@@ -1,3 +1,222 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Visor de Código</title>
+    <style>
+        /* Un poco de estilo para que se vea como un editor de código */
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background-color: #f9f9f9;
+        }
+        pre {
+            background-color: #1e1e1e;
+            color: #d4d4d4;
+            padding: 20px;
+            border-radius: 8px;
+            overflow-x: auto; /* Agrega barra de desplazamiento si el código es muy largo */
+        }
+        code {
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+
+    <h2><!doctype html>
+<html lang="es" class="h-full">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Style - Tienda Online</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&amp;family=Poppins:wght@300;400;500;600&amp;display=swap" rel="stylesheet">
+    <style>
+        body {
+            box-sizing: border-box;
+        }
+        
+        .font-display {
+            font-family: 'Playfair Display', serif;
+        }
+        
+        .font-body {
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        .product-card {
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .product-card:hover {
+            transform: translateY(-8px);
+        }
+        
+        .product-card:hover .product-image {
+            transform: scale(1.05);
+        }
+        
+        .product-image {
+            transition: transform 0.5s ease;
+        }
+        
+        .btn-cart {
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .btn-cart::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: left 0.5s;
+        }
+        
+        .btn-cart:hover::before {
+            left: 100%;
+        }
+        
+        .cart-badge {
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0%,
+            100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.1);
+            }
+        }
+        
+        .modal-overlay {
+            backdrop-filter: blur(4px);
+        }
+        
+        .slide-in {
+            animation: slideIn 0.3s ease-out;
+        }
+        
+        @keyframes slideIn {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+        
+        .fade-in {
+            animation: fadeIn 0.15s ease-out;
+        }
+        
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: scale(0.95);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+        
+        .toast {
+            animation: toastIn 0.3s ease-out, toastOut 0.3s ease-in 2.7s forwards;
+        }
+        
+        @keyframes toastIn {
+            from {
+                transform: translateY(-100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+        
+        @keyframes toastOut {
+            from {
+                transform: translateY(0);
+                opacity: 1;
+            }
+            to {
+                transform: translateY(-100%);
+                opacity: 0;
+            }
+        }
+        
+        .image-viewer {
+            position: relative;
+            overflow: hidden;
+            cursor: zoom-in;
+        }
+        
+        .image-viewer.zoomed {
+            cursor: zoom-out;
+        }
+        
+        .image-viewer img {
+            transition: transform 0.3s ease;
+        }
+        
+        .image-viewer.zoomed img {
+            transform: scale(2);
+            cursor: move;
+        }
+        
+        .nav-arrow {
+            transition: all 0.3s ease;
+            opacity: 0.8;
+        }
+        
+        .nav-arrow:hover {
+            opacity: 1;
+            transform: scale(1.1);
+        }
+        
+        .thumbnail-img {
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .thumbnail-img:hover {
+            transform: scale(1.05);
+        }
+        
+        .thumbnail-img.active {
+            border-color: #ff8c42 !important;
+            box-shadow: 0 0 0 2px #ff8c42;
+        }
+    </style>
+    <style>
+        @view-transition {
+            navigation: auto;
+        }
+    </style>
+
+
+    <!-- Firebase -->
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js"></script>
+
+</head>
+
 <body>
 
     <script type="module">
@@ -1913,4 +2132,25 @@ btn.textContent = 'Crear Producto';
 
 </body>
 
-    
+</html></h2>
+
+    <script type="text/plain" id="codigo-oculto">
+<h1>¡Hola Mundo!</h1>
+<p>Este texto tiene etiquetas, pero no se van a ejecutar.</p>
+<script>
+    alert("Incluso este script es inofensivo aquí adentro");
+</script>
+    </script>
+
+    <pre><code id="pantalla-codigo"></code></pre>
+
+    <script>
+        // Toma el texto exacto que pusiste arriba
+        const miCodigo = document.getElementById('codigo-oculto').innerHTML;
+        
+        // Lo inyecta en la pantalla de forma segura (como texto, no como HTML)
+        document.getElementById('pantalla-codigo').textContent = miCodigo.trim();
+    </script>
+
+</body>
+</html>
