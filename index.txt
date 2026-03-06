@@ -1,4 +1,4 @@
-<h2><body>
+<body>
 
     <script type="module">
 
@@ -1913,5 +1913,4 @@ btn.textContent = 'Crear Producto';
 
 </body>
 
-</h2>
     
