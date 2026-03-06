@@ -1,190 +1,15 @@
-<!doctype html>
-<html lang="es" class="h-full">
+<body>
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Style - Tienda Online</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="/_sdk/element_sdk.js"></script>
-    <script src="/_sdk/data_sdk.js"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&amp;family=Poppins:wght@300;400;500;600&amp;display=swap" rel="stylesheet">
-    <style>
-        body {
-            box-sizing: border-box;
-        }
-        
-        .font-display {
-            font-family: 'Playfair Display', serif;
-        }
-        
-        .font-body {
-            font-family: 'Poppins', sans-serif;
-        }
-        
-        .product-card {
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-        
-        .product-card:hover {
-            transform: translateY(-8px);
-        }
-        
-        .product-card:hover .product-image {
-            transform: scale(1.05);
-        }
-        
-        .product-image {
-            transition: transform 0.5s ease;
-        }
-        
-        .btn-cart {
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .btn-cart::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
-            transition: left 0.5s;
-        }
-        
-        .btn-cart:hover::before {
-            left: 100%;
-        }
-        
-        .cart-badge {
-            animation: pulse 2s infinite;
-        }
-        
-        @keyframes pulse {
-            0%,
-            100% {
-                transform: scale(1);
-            }
-            50% {
-                transform: scale(1.1);
-            }
-        }
-        
-        .modal-overlay {
-            backdrop-filter: blur(4px);
-        }
-        
-        .slide-in {
-            animation: slideIn 0.3s ease-out;
-        }
-        
-        @keyframes slideIn {
-            from {
-                transform: translateX(100%);
-                opacity: 0;
-            }
-            to {
-                transform: translateX(0);
-                opacity: 1;
-            }
-        }
-        
-        .fade-in {
-            animation: fadeIn 0.15s ease-out;
-        }
-        
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: scale(0.95);
-            }
-            to {
-                opacity: 1;
-                transform: scale(1);
-            }
-        }
-        
-        .toast {
-            animation: toastIn 0.3s ease-out, toastOut 0.3s ease-in 2.7s forwards;
-        }
-        
-        @keyframes toastIn {
-            from {
-                transform: translateY(-100%);
-                opacity: 0;
-            }
-            to {
-                transform: translateY(0);
-                opacity: 1;
-            }
-        }
-        
-        @keyframes toastOut {
-            from {
-                transform: translateY(0);
-                opacity: 1;
-            }
-            to {
-                transform: translateY(-100%);
-                opacity: 0;
-            }
-        }
-        
-        .image-viewer {
-            position: relative;
-            overflow: hidden;
-            cursor: zoom-in;
-        }
-        
-        .image-viewer.zoomed {
-            cursor: zoom-out;
-        }
-        
-        .image-viewer img {
-            transition: transform 0.3s ease;
-        }
-        
-        .image-viewer.zoomed img {
-            transform: scale(2);
-            cursor: move;
-        }
-        
-        .nav-arrow {
-            transition: all 0.3s ease;
-            opacity: 0.8;
-        }
-        
-        .nav-arrow:hover {
-            opacity: 1;
-            transform: scale(1.1);
-        }
-        
-        .thumbnail-img {
-            transition: all 0.3s ease;
-            cursor: pointer;
-        }
-        
-        .thumbnail-img:hover {
-            transform: scale(1.05);
-        }
-        
-        .thumbnail-img.active {
-            border-color: #ff8c42 !important;
-            box-shadow: 0 0 0 2px #ff8c42;
-        }
-    </style>
-    <style>
-        @view-transition {
-            navigation: auto;
-        }
-    </style>
-</head>
+    <script type="module">
 
-<body class="h-full font-body">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js"; import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js"; const firebaseConfig = { apiKey: "AIzaSyCCDSrE_hWvYYgjNwTX85leeU3vHBLBJsY",
+        authDomain: "stylishsteps-10fc4.firebaseapp.com", projectId: "stylishsteps-10fc4", storageBucket: "stylishsteps-10fc4.firebasestorage.app", messagingSenderId: "32645603346", appId: "1:32645603346:web:ae022c525a85aaf7ad38cb" }; const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app); async function cargarDatos(){ const productosSnapshot = await getDocs(collection(db,"productos")); products = productosSnapshot.docs.map(doc => doc.data()); const categoriasSnapshot = await getDocs(collection(db,"categorias"));
+        collections = categoriasSnapshot.docs.map(doc => doc.data()); renderCategories(); renderProducts(); } cargarDatos();
+
+    </script>
+
+
     <div id="app" class="h-full w-full overflow-auto" style="background: #ffffff;">
         <!-- Header -->
         <header id="header" class="sticky top-0 z-40 backdrop-blur-md border-b" style="background: #fff9d4; border-color: #bfdbfe;">
@@ -452,18 +277,61 @@
                 <div class="flex items-center justify-between mb-8">
                     <h2 class="font-display text-3xl font-bold" style="color: #000000;">Panel de Administración</h2><button onclick="closeAdminPanel()" class="px-6 py-3 rounded-full font-semibold text-white transition-all" style="background: #ff8c42;"> Cerrar Panel </button>
                 </div>
-                <div class="grid md:grid-cols-4 gap-6 mb-8"><button onclick="showAdminSection('settings')" class="admin-nav-btn p-6 rounded-2xl border-2 transition-all hover:shadow-lg" data-section="settings" style="border-color: #ff8c42; background: #fff9d4;">
-       <svg class="w-12 h-12 mx-auto mb-3" style="color: #ff8c42;" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" /> <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-       </svg><h3 class="font-display text-xl font-bold" style="color: #000000;">Configuración</h3></button> <button onclick="showAdminSection('shipping')" class="admin-nav-btn p-6 rounded-2xl border-2 transition-all hover:shadow-lg" data-section="shipping"
-                        style="border-color: #000000; background: white;">
-       <svg class="w-12 h-12 mx-auto mb-3" style="color: #000000;" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-       </svg><h3 class="font-display text-xl font-bold" style="color: #000000;">Datos de Envío</h3></button> <button onclick="showAdminSection('collections')" class="admin-nav-btn p-6 rounded-2xl border-2 transition-all hover:shadow-lg" data-section="collections"
-                        style="border-color: #000000; background: white;">
-       <svg class="w-12 h-12 mx-auto mb-3" style="color: #000000;" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
-       </svg><h3 class="font-display text-xl font-bold" style="color: #000000;">Colecciones</h3></button> <button onclick="showAdminSection('products')" class="admin-nav-btn p-6 rounded-2xl border-2 transition-all hover:shadow-lg" data-section="products"
-                        style="border-color: #000000; background: white;">
-       <svg class="w-12 h-12 mx-auto mb-3" style="color: #000000;" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
-       </svg><h3 class="font-display text-xl font-bold" style="color: #000000;">Productos</h3></button>
+                <div class="grid md:grid-cols-4 gap-6 mb-8">
+
+                    <!-- CONFIGURACIÓN -->
+                    <button onclick="showAdminSection('settings')" class="admin-nav-btn p-6 rounded-2xl border-2 transition-all hover:shadow-lg" data-section="settings" style="border-color:#ff8c42;background:#fff9d4;">
+
+<svg class="w-12 h-12 mx-auto mb-3" style="color:#ff8c42;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0"/>
+<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+</svg>
+
+<h3 class="font-display text-xl font-bold">Configuración</h3>
+
+</button>
+
+
+                    <!-- ENVÍOS -->
+                    <button onclick="showAdminSection('shipping')" class="admin-nav-btn p-6 rounded-2xl border-2 transition-all hover:shadow-lg" data-section="shipping" style="border-color:#000;background:white;">
+
+<svg class="w-12 h-12 mx-auto mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+</svg>
+
+<h3 class="font-display text-xl font-bold">Datos de Envío</h3>
+
+</button>
+
+
+                    <!-- COLECCIONES -->
+                    <button onclick="showAdminSection('collections')" class="admin-nav-btn p-6 rounded-2xl border-2 transition-all hover:shadow-lg" data-section="collections" style="border-color:#000;background:white;">
+
+<svg class="w-12 h-12 mx-auto mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2"/>
+</svg>
+
+<h3 class="font-display text-xl font-bold">Colecciones</h3>
+
+</button>
+
+
+                    <!-- PRODUCTOS -->
+                    <button onclick="showAdminSection('products')" class="admin-nav-btn p-6 rounded-2xl border-2 transition-all hover:shadow-lg" data-section="products" style="border-color:#000;background:white;">
+
+<svg class="w-12 h-12 mx-auto mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/>
+</svg>
+
+<h3 class="font-display text-xl font-bold">Productos</h3>
+
+</button>
+
                 </div>
                 <!-- Shipping Section -->
                 <div id="admin-shipping-section" class="admin-section hidden">
@@ -687,30 +555,8 @@ https://ejemplo.com/video.mp4"></textarea>
             </div>
         </div>
     </div>
-
-
-    <!-- Tu textarea -->
-    <textarea id="product-images"></textarea>
-
-    <button id="guardarBtn">Guardar</button>
-
-    <div id="productos"></div>
-
-    <script type="module">
-
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js"; import { getFirestore, collection, addDoc, getDocs } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js"; const firebaseConfig = { apiKey:
-        "AIzaSyCCDSrE_hWvYYgjNwTX85leeU3vHBLBJsY", authDomain: "stylishsteps-10fc4.firebaseapp.com", projectId: "stylishsteps-10fc4", }; const app = initializeApp(firebaseConfig); const db = getFirestore(app); document.getElementById("guardarBtn").addEventListener("click",
-        async () => { const urls = document.getElementById("product-images").value; await addDoc(collection(db, "productos"), { media: urls, fecha: new Date() }); alert("Guardado en Firebase 🔥"); cargarProductos(); }); async function cargarProductos()
-        { const querySnapshot = await getDocs(collection(db, "productos")); const contenedor = document.getElementById("productos"); contenedor.innerHTML = ""; querySnapshot.forEach(doc => { const data = doc.data(); contenedor.innerHTML += `
-        <div style="margin-bottom:20px;">
-            ${data.media.split("\n").map(url => { if(url.endsWith(".mp4")){ return `<video src="${url}" width="300" autoplay muted loop></video>`; } else { return `<img src="${url}" width="300">`; } }).join("")}
-        </div>
-        `; }); } cargarProductos();
-
-    </script>
-
-
     <script>
+        // Default configuration
         const defaultConfig = {
             store_name: 'My Style',
             welcome_text: 'Descubre tu estilo único',
@@ -746,52 +592,28 @@ https://ejemplo.com/video.mp4"></textarea>
         const ADMIN_PASSWORD = '#@MyStyle20@#';
 
 
-        const dataHandler = {
-            onDataChanged(data) {
-                allData = data;
-                collections = data.filter(item => item.type === 'collection');
-                products = data.filter(item => item.type === 'product');
-                const settingsRecord = data.find(item => item.type === 'settings');
 
+        // Initialize Data SDK
+        function cargarDatos() {
+            db.collection("tienda").onSnapshot((snapshot) => {
+                let data = [];
+                snapshot.forEach((doc) => {
+                    data.push({
+                        __backendId: doc.id,
+                        ...doc.data()
+                    });
+                });
 
-                if (settingsRecord) {
-                    config.store_name = settingsRecord.store_name || defaultConfig.store_name;
-                    config.welcome_text = settingsRecord.welcome_text || defaultConfig.welcome_text;
-                    config.whatsapp_number = settingsRecord.whatsapp_number || defaultConfig.whatsapp_number;
-                    config.currency_symbol = settingsRecord.currency_symbol || defaultConfig.currency_symbol;
-                    config.header_subtitle = settingsRecord.header_subtitle || defaultConfig.header_subtitle;
-                    config.main_description = settingsRecord.main_description || defaultConfig.main_description;
-                    config.agency_name = settingsRecord.agency_name || defaultConfig.agency_name;
-                    config.shipping_template = settingsRecord.shipping_template || defaultConfig.shipping_template;
-
-                    updateUIWithSettings();
-                }
-
-                renderCategories();
-                renderProducts();
-                updateCartUI();
-                renderAdminCollections();
-                renderAdminProducts();
-                updateCategorySelect();
-            }
-        };
-
-
-        async function initDataSDK() {
-            if (window.dataSdk) {
-                const result = await window.dataSdk.init(dataHandler);
-                if (!result.isOk) {
-                    console.error('Failed to initialize Data SDK');
-                }
-            }
+                dataHandler.onDataChanged(data);
+            });
         }
 
-
+        // Format price
         function formatPrice(price) {
             return config.currency_symbol + price.toLocaleString('es-CO');
         }
 
-
+        // Update UI with settings
         function updateUIWithSettings() {
             const storeName = config.store_name || defaultConfig.store_name;
             const storeTitle = document.getElementById('store-title');
@@ -806,7 +628,7 @@ https://ejemplo.com/video.mp4"></textarea>
             document.getElementById('main-description').textContent = config.main_description || defaultConfig.main_description;
         }
 
-
+        // Render categories from collections
         function renderCategories() {
             const categoriesBar = document.getElementById('categories-bar');
 
@@ -837,7 +659,7 @@ https://ejemplo.com/video.mp4"></textarea>
             categoriesBar.innerHTML = categoriesHTML;
         }
 
-
+        // Render products
         function renderProducts() {
             const grid = document.getElementById('products-grid');
             const filteredProducts = currentCategory === 'all' ?
@@ -1470,11 +1292,12 @@ https://ejemplo.com/video.mp4"></textarea>
           ...settingsRecord,
           shipping_template: template
         };
-        window.dataSdk.update(updatedSettings).then(result => {
-          if (result.isOk) {
-            config.shipping_template = template;
-          }
-        });
+        await addDoc(collection(db, "config"), {
+store_name: storeName,
+welcome_text: welcomeText,
+whatsapp_number: whatsappNumber,
+updatedAt: new Date()
+});
       } else {
         const settingsData = {
           id: 'settings_' + Date.now(),
@@ -1756,57 +1579,80 @@ https://ejemplo.com/video.mp4"></textarea>
       document.getElementById(`edit-color-input-${id}`).remove();
     }
 
-    async function createProduct(e) {
-      e.preventDefault();
-      
-      if (allData.length >= 999) {
-        showToast('⚠️ Límite de 999 registros alcanzado');
-        return;
-      }
+    import { addDoc, collection } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
-      const btn = document.getElementById('product-submit-btn');
-      btn.disabled = true;
-      btn.textContent = 'Creando...';
+async function createProduct(e) {
 
-      const colors = [];
-      const colorInputs = document.querySelectorAll('#colors-container > div');
-      colorInputs.forEach(div => {
-        const id = div.id.split('-')[2];
-        const hex = document.getElementById(`color-hex-${id}`).value;
-        const name = document.getElementById(`color-name-${id}`).value;
-        if (name) {
-          colors.push({ hex, name });
-        }
-      });
+  e.preventDefault();
 
-      const newProduct = {
-        id: 'prod_' + Date.now(),
-        name: document.getElementById('product-name').value,
-        price: parseFloat(document.getElementById('product-price').value),
-        code: document.getElementById('product-code').value,
-        category: document.getElementById('product-category').value,
-        stock: parseInt(document.getElementById('product-stock').value),
-        images: document.getElementById('product-images').value.trim(),
-        sizes: document.getElementById('product-sizes').value.trim(),
-        colors: JSON.stringify(colors),
-        description: document.getElementById('product-description').value,
-        type: 'product',
-        createdAt: new Date().toISOString()
-      };
+  const btn = document.getElementById('product-submit-btn');
+  btn.disabled = true;
+  btn.textContent = 'Guardando...';
 
-      const result = await window.dataSdk.create(newProduct);
-      
-      if (result.isOk) {
-        showToast('✅ Producto creado');
-        document.getElementById('product-form').reset();
-        document.getElementById('colors-container').innerHTML = '';
-        colorInputCount = 0;
-      } else {
-        showToast('❌ Error al crear producto');
-      }
+  const colors = [];
+  const colorInputs = document.querySelectorAll('#colors-container > div');
 
-      btn.disabled = false;
-      btn.textContent = 'Crear Producto';
+  colorInputs.forEach(div => {
+    const id = div.id.split('-')[2];
+    const hex = document.getElementById(`color-hex-${id}`).value;
+    const name = document.getElementById(`color-name-${id}`).value;
+
+    if (name) {
+      colors.push({ hex, name });
+    }
+  });
+
+  const newProduct = {
+    name: document.getElementById('product-name').value,
+    price: parseFloat(document.getElementById('product-price').value),
+    code: document.getElementById('product-code').value,
+    category: document.getElementById('product-category').value,
+    stock: parseInt(document.getElementById('product-stock').value),
+    images: document.getElementById('product-images').value.trim(),
+    sizes: document.getElementById('product-sizes').value.trim(),
+    colors: colors,
+    description: document.getElementById('product-description').value,
+    createdAt: new Date()
+  };
+
+  try {
+
+    await addDoc(collection(db, "productos"), newProduct);
+
+    showToast("✅ Producto guardado en Firebase");
+
+    document.getElementById('product-form').reset();
+
+  } catch(error){
+
+    console.error(error);
+    showToast("❌ Error al guardar");
+
+  }
+
+  btn.disabled = false;
+  btn.textContent = "Crear Producto";
+}
+
+      try {
+
+  await addDoc(collection(db, "productos"), newProduct);
+
+  showToast('✅ Producto guardado en Firebase');
+
+  document.getElementById('product-form').reset();
+  document.getElementById('colors-container').innerHTML = '';
+  colorInputCount = 0;
+
+} catch (error) {
+
+  console.error(error);
+  showToast('❌ Error al guardar producto');
+
+}
+
+btn.disabled = false;
+btn.textContent = 'Crear Producto';
     }
 
     function editProduct(productId) {
@@ -2015,7 +1861,7 @@ https://ejemplo.com/video.mp4"></textarea>
 
     // Initialize on load
     window.addEventListener('DOMContentLoaded', () => {
-      initDataSDK();
+      
       renderCategories();
       renderProducts();
       updateCartUI();
@@ -2053,6 +1899,16 @@ https://ejemplo.com/video.mp4"></textarea>
             }
         })();
     </script>
-</body>
 
-</html>
+    <script type="module">
+
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js"; import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js"; const firebaseConfig = { apiKey: "AIzaSyCCDSrE_hWvYYgjNwTX85leeU3vHBLBJsY",
+        authDomain: "stylishsteps-10fc4.firebaseapp.com", projectId: "stylishsteps-10fc4", }; const app = initializeApp(firebaseConfig); const db = getFirestore(app); document.getElementById("guardarBtn").addEventListener("click", async () => { const
+        urls = document.getElementById("product-images").value; await addDoc(collection(db, "productos"), { media: urls, fecha: new Date() }); alert("Guardado en Firebase 🔥"); });
+
+    </script>
+
+    <script type="module"></script>
+
+
+</body
