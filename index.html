@@ -245,13 +245,10 @@
 
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js"; import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js"; const firebaseConfig = { apiKey: "AIzaSyDNeN0AIcXw0aAiwc6S7472y7YMjHzbV94",
         authDomain: "tienda-virtual-883ef.firebaseapp.com", databaseURL: "https://tienda-virtual-883ef-default-rtdb.firebaseio.com", projectId: "tienda-virtual-883ef", storageBucket: "tienda-virtual-883ef.firebasestorage.app", messagingSenderId: "871120614985",
-        appId: "1:871120614985:web:0274d91497b7f1e3d33198" }; const app = initializeApp(firebaseConfig); const db = getFirestore(app); let productos = []; async function cargarProductos(){ const contenedor = document.getElementById("products"); const
-        texto = document.getElementById("no-products"); contenedor.innerHTML = ""; const querySnapshot = await getDocs(collection(db,"productos")); if(querySnapshot.empty){ texto.style.display="block"; return; } texto.style.display="none"; productos =
-        []; querySnapshot.forEach((docItem)=>{ const data = docItem.data(); productos.push(data); }); mostrarProductos(productos); };async function cargarFiltros(){ const contenedor = document.getElementById("filtrosColecciones"); contenedor.innerHTML=`
-        <button class="filtro active" onclick="filtrar('Todos', event)">Todos</button>`; const querySnapshot = await getDocs(collection(db,"colecciones")); querySnapshot.forEach((docItem)=>{ const data = docItem.data(); contenedor.innerHTML+=`
-        <button class="filtro" onclick="filtrar('${data.nombre}', event)">
-        ${data.nombre}
-        </button>`; }); }; function mostrarProductos(lista){ const contenedor = document.getElementById("products"); contenedor.innerHTML=""; lista.forEach(p=>{ contenedor.innerHTML+=`
+        appId: "1:871120614985:web:0274d91497b7f1e3d33198" }; const app = initializeApp(firebaseConfig); const db = getFirestore(app); let productos = []; import { onSnapshot } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js"; function
+        cargarProductos(){ const contenedor = document.getElementById("products"); const texto = document.getElementById("no-products"); onSnapshot(collection(db,"productos"), (snapshot) => { contenedor.innerHTML = ""; if(snapshot.empty){ texto.style.display
+        = "block"; return; } texto.style.display = "none"; productos = []; snapshot.forEach((docItem)=>{ const data = docItem.data(); productos.push(data); }); mostrarProductos(productos); }); }; function mostrarProductos(lista){ const contenedor = document.getElementById("products");
+        contenedor.innerHTML=""; lista.forEach(p=>{ contenedor.innerHTML+=`
 
         <div class="product">
 
@@ -267,12 +264,13 @@ Comprar
 
         </div>
 
-        `; }); } async function cargarFiltros(){ const contenedor = document.getElementById("filtrosColecciones"); contenedor.innerHTML=`
-
-        <button class="filtro active" onclick="filtrar('Todos', event)">Todos</button>`; const querySnapshot = await getDocs(collection(db,"colecciones")); querySnapshot.forEach((docItem)=>{ const data = docItem.data(); contenedor.innerHTML+=`
-        <button class="filtro" onclick="filtrar('${data.nombre}',event)"> ${data.nombre} </button> `; }); } window.comprar=function(nombre,precio ){ const telefono="51912492458"; const mensaje=`Hola quiero comprar: Producto: ${nombre} Precio: S/ ${precio}
-        `; const url=`https://wa.me/${telefono}?text=${encodeURIComponent(mensaje)}`; window.open(url); }, cargarProductos(); cargarFiltros(); window.filtrar = function(nombre,event){ document.querySelectorAll(".filtro").forEach(b=>{ b.classList.remove("active");
-        }); event.target.classList.add("active"); if(nombre==="Todos"){ mostrarProductos(productos); return; } const filtrados = productos.filter(p=>p.coleccion===nombre); mostrarProductos(filtrados); };
+        `; }); }; function cargarFiltros(){ const contenedor = document.getElementById("filtrosColecciones"); onSnapshot(collection(db,"colecciones"), (snapshot) => { contenedor.innerHTML = `
+        <button class="filtro active" onclick="filtrar('Todos', event)">Todos</button> `; snapshot.forEach((docItem)=>{ const data = docItem.data(); contenedor.innerHTML += `
+        <button class="filtro" onclick="filtrar('${data.nombre}',event)">
+                ${data.nombre}
+            </button>`; }); }); }; window.comprar=function(nombre,precio ){ const telefono="51912492458"; const mensaje=`Hola quiero comprar: Producto: ${nombre} Precio: S/ ${precio} `; const url=`https://wa.me/${telefono}?text=${encodeURIComponent(mensaje)}`;
+        window.open(url); }, cargarProductos(); cargarFiltros(); window.filtrar = function(nombre,event){ document.querySelectorAll(".filtro").forEach(b=>{ b.classList.remove("active"); }); event.target.classList.add("active"); if(nombre==="Todos"){ mostrarProductos(productos);
+        return; } const filtrados = productos.filter(p=>p.coleccion===nombre); mostrarProductos(filtrados); };
 
     </script>
 </body>
