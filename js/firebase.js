@@ -11,12 +11,13 @@ import {
 } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
 const firebaseConfig = {
-    apiKey: "AIzaSyCCDSrE_hWvYYgjNwTX85leeU3vHBLBJsY",
-    authDomain: "stylishsteps-10fc4.firebaseapp.com",
-    projectId: "stylishsteps-10fc4",
-    storageBucket: "stylishsteps-10fc4.firebasestorage.app",
-    messagingSenderId: "32645603346",
-    appId: "1:32645603346:web:ae022c525a85aaf7ad38cb"
+    apiKey: "AIzaSyDNeN0AIcXw0aAiwc6S7472y7YMjHzbV94",
+    authDomain: "tienda-virtual-883ef.firebaseapp.com",
+    databaseURL: "https://tienda-virtual-883ef-default-rtdb.firebaseio.com",
+    projectId: "tienda-virtual-883ef",
+    storageBucket: "tienda-virtual-883ef.firebasestorage.app",
+    messagingSenderId: "871120614985",
+    appId: "1:871120614985:web:0274d91497b7f1e3d33198"
 };
 
 const app = initializeApp(firebaseConfig);
