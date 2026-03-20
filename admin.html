@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Panel Administración - My Style</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            background: #f5f5f5;
+        }
+        
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 40px;
+        }
+        
+        h1 {
+            font-family: 'Playfair Display';
+        }
+        
+        .close-btn {
+            background: #ff8c42;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 20px;
+            cursor: pointer;
+        }
+        
+        .menu {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            padding: 20px 40px;
+        }
+        
+        .card {
+            background: #eee;
+            border-radius: 15px;
+            padding: 30px;
+            text-align: center;
+            cursor: pointer;
+            border: 2px solid transparent;
+        }
+        
+        .card:hover {
+            border-color: #ff8c42;
+        }
+        
+        .card.active {
+            background: #e6dbb8;
+            border-color: #ff8c42;
+        }
+        
+        .section {
+            display: none;
+            background: white;
+            margin: 20px 40px;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+        }
+        
+        .section.active {
+            display: block;
+        }
+        
+        .section h2 {
+            font-family: 'Playfair Display';
+        }
+        
+        label {
+            font-weight: 500;
+            display: block;
+            margin-top: 15px;
+        }
+        
+        input,
+        select,
+        textarea {
+            width: 100%;
+            padding: 12px;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+            margin-top: 5px;
+        }
+        
+        .save-btn {
+            margin-top: 30px;
+            width: 100%;
+            background: #ff8c42;
+            border: none;
+            padding: 15px;
+            border-radius: 25px;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        
+        .plantilla {
+            flex: 1;
+            padding: 20px;
+            border-radius: 12px;
+            border: 2px solid #ddd;
+            text-align: center;
+            cursor: pointer;
+            background: #f6f6f6;
+        }
+        
+        .plantilla.active {
+            background: #e6dbb8;
+            border-color: #ff8c42;
+        }
+        
+        .envio-box {
+            margin-top: 20px;
+            padding: 25px;
+            border-radius: 12px;
+            border: 2px solid #dce3ea;
+            background: #eef3f7;
+        }
+        
+        .envio-box.agencia {
+            background: #fff4d6;
+            border: 2px solid #f2b84a;
+        }
+        
+        .envio-box ul {
+            margin-top: 10px;
+            line-height: 1.8;
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <header>
+
+        <h1>Panel de Administración</h1>
+
+        <button class="close-btn" onclick="closePanel()">Cerrar Panel</button>
+
+    </header>
+
+    <div class="menu">
+
+        <div class="card active" onclick="openSection('config', this)">
+            ⚙️
+            <h3>Configuración</h3>
+        </div>
+
+        <div class="card" onclick="openSection('envios', this)">
+            📄
+            <h3>Datos de Envío</h3>
+        </div>
+
+        <div class="card" onclick="openSection('colecciones', this)">
+            🗂
+            <h3>Colecciones</h3>
+        </div>
+
+        <div class="card" onclick="openSection('productos', this)">
+            🛍
+            <h3>Productos</h3>
+        </div>
+
+    </div>
+
+    <script>
+        window.openSection = function(id, elemento) {
+
+            document.querySelectorAll(".section").forEach(section => {
+                section.classList.remove("active");
+            });
+
+            document.getElementById(id).classList.add("active");
+
+            document.querySelectorAll(".card").forEach(card => {
+                card.classList.remove("active");
+            });
+
+            elemento.classList.add("active");
+
+        }
+    </script>
+
+
+    <!-- CONFIGURACION -->
+
+    <div class="section active" id="config">
+
+        <h2>Configuración de la Tienda</h2>
+
+        <label>Nombre de la Tienda</label>
+        <input id="nombreTienda">
+
+        <label>Texto Bienvenida</label>
+        <input id="bienvenida">
+
+        <label>WhatsApp</label>
+        <input id="whatsapp">
+
+        <label>Moneda</label>
+        <input id="moneda">
+
+        <label>Subtitulo</label>
+        <input id="subtitulo">
+
+        <label>Descripción</label>
+        <input id="descripcion">
+
+        <button class="save-btn" onclick="guardarConfig()">Guardar Configuración</button>
+
+    </div>
+
+
+    <!-- ENVIOS -->
+
+    <div class="section" id="envios">
+
+        <h2>Configurar Plantillas de Datos de Envío</h2>
+
+        <p>Selecciona qué plantilla verán tus clientes:</p>
+
+        <div style="display:flex; gap:20px; margin-top:20px;">
+
+            <div class="plantilla active" onclick="seleccionarPlantilla('domicilio', this)">
+
+                <h3>🏠 Plantilla 1</h3>
+                <p>Envío a Domicilio</p>
+
+            </div>
+
+            <div class="plantilla" onclick="seleccionarPlantilla('agencia', this)">
+
+                <h3>🚚 Plantilla 2</h3>
+                <p>Envío por Agencia</p>
+
+            </div>
+
+        </div>
+
+        <div class="envio-box domicilio">
+
+            <h3>📦 Plantilla 1: Envío a Domicilio</h3>
+
+            <p>Los campos son fijos:</p>
+
+            <ul>
+
+                <li>Nombre completo</li>
+                <li>Teléfono</li>
+                <li>Departamento</li>
+                <li>Provincia</li>
+                <li>Distrito / Ciudad</li>
+                <li>Dirección Completa o Especificación</li>
+
+            </ul>
+
+        </div>
+
+        <div class="envio-box agencia">
+
+            <h3>🚚 Plantilla 2: Envío por Agencia</h3>
+
+            <label>Nombre de la Agencia</label>
+
+            <input id="nombreAgencia" placeholder="Agencia Shalom">
+
+            <p>Los campos de esta plantilla son:</p>
+
+            <ul>
+
+                <li>Nombre completo</li>
+                <li>DNI</li>
+                <li>Ciudad</li>
+                <li>Nombre de tu Agencia</li>
+                <li>Celular</li>
+
+            </ul>
+
+        </div>
+
+        <button class="save-btn" onclick="guardarEnvio()">
+Guardar Configuración de Envío
+</button>
+
+    </div>
+
+    <!-- COLECCIONES -->
+
+    <div class="section" id="colecciones">
+
+        <h2>Crear Colección</h2>
+
+        <label>Nombre colección</label>
+        <input id="nombreColeccion">
+
+        <button class="save-btn" onclick="crearColeccion()">Crear Colección</button>
+        <div id="listaColecciones"></div>
+
+    </div>
+
+    <!-- PRODUCTOS -->
+
+    <div class="section" id="productos">
+
+        <h2>Agregar Producto</h2>
+
+        <label>Nombre</label>
+        <input id="nombreProducto">
+
+        <label>Precio</label>
+        <input id="precioProducto">
+
+        <label>Código</label>
+        <input id="codigoProducto">
+
+        <label>Colección</label>
+        <select id="coleccionProducto"></select>
+
+        <label>Stock</label>
+        <input id="stockProducto">
+
+        <label>Imágenes (URL separadas por coma)</label>
+        <input id="imagenesProducto">
+
+        <label>Tallas</label>
+        <input id="tallasProducto">
+
+        <label>Descripción</label>
+        <textarea id="descripcionProducto"></textarea>
+
+        <button class="save-btn" onclick="crearProducto()">Crear Producto</button>
+
+    </div>
+
+
+    <script type="module">
+
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js"; import { getFirestore, collection, addDoc, getDocs, doc, setDoc, getDoc, deleteDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js"; const
+        firebaseConfig = { apiKey:"AIzaSyCCDSrE_hWvYYgjNwTX85leeU3vHBLBJsY", authDomain:"stylishsteps-10fc4.firebaseapp.com", projectId:"stylishsteps-10fc4", storageBucket:"stylishsteps-10fc4.firebasestorage.app", messagingSenderId:"32645603346", appId:"1:32645603346:web:ae022c525a85aaf7ad38cb"
+        }; const app = initializeApp(firebaseConfig); const db = getFirestore(app); async function cargarConfig(){ const docRef = doc(db,"configuracion","tienda"); const snap = await getDoc(docRef); if(snap.exists()){ const data = snap.data(); document.getElementById("nombreTienda").value
+        = data.nombre || ""; document.getElementById("bienvenida").value = data.bienvenida || ""; document.getElementById("whatsapp").value = data.whatsapp || ""; document.getElementById("moneda").value = data.moneda || ""; document.getElementById("subtitulo").value
+        = data.subtitulo || ""; document.getElementById("descripcion").value = data.descripcion || ""; } } cargarConfig();window.guardarConfig = async function(){ await setDoc(doc(db,"configuracion","tienda"),{ nombre:document.getElementById("nombreTienda").value,
+        bienvenida:document.getElementById("bienvenida").value, whatsapp:document.getElementById("whatsapp").value, moneda:document.getElementById("moneda").value, subtitulo:document.getElementById("subtitulo").value, descripcion:document.getElementById("descripcion").value
+        }); alert("Configuración guardada"); }; let plantillaSeleccionada="domicilio"; window.guardarEnvio = async function(){ await setDoc(doc(db,"configuracion_envio","envio"),{ tipo:plantillaSeleccionada, agencia:document.getElementById("nombreAgencia").value
+        }); alert("Configuración de envío guardada"); };window.crearColeccion = async function(){ const nombre = document.getElementById("nombreColeccion").value; if(nombre.trim() === "") return alert("Escribe un nombre"); await addDoc(collection(db,"colecciones"),{
+        nombre }); alert("Colección creada"); document.getElementById("nombreColeccion").value = ""; cargarColecciones(); }; document.getElementById("coleccionProducto").value = nombre; window.crearProducto = async function(){ await addDoc(collection(db,"productos"),{
+        nombre:document.getElementById("nombreProducto").value, precio: parseFloat(document.getElementById("precioProducto").value) || 0, codigo:document.getElementById("codigoProducto").value, coleccion:document.getElementById("coleccionProducto").value,
+        stock: parseInt(document.getElementById("stockProducto").value) || 0, imagenes:document.getElementById("imagenesProducto") .value.split(",").map(i => i.trim()), tallas:document.getElementById("tallasProducto").value, descripcion:document.getElementById("descripcionProducto").value
+        }); alert("Producto creado"); document.getElementById("nombreProducto").value = ""; document.getElementById("precioProducto").value = ""; document.getElementById("codigoProducto").value = ""; document.getElementById("stockProducto").value = "";
+        document.getElementById("imagenesProducto").value = ""; document.getElementById("tallasProducto").value = ""; document.getElementById("descripcionProducto").value = ""; }; window.closePanel=function(){ window.location="index.html"; }; window.seleccionarPlantilla
+        = function(tipo, elemento){ plantillaSeleccionada = tipo; document.querySelectorAll(".plantilla").forEach(p=>{ p.classList.remove("active"); }); elemento.classList.add("active"); }; window.eliminarColeccion = async function(id){ await deleteDoc(doc(db,"colecciones",id));
+        alert("Colección eliminada"); cargarColecciones(); }; async function cargarColecciones() { const lista = document.getElementById("listaColecciones"); const select = document.getElementById("coleccionProducto"); lista.innerHTML = ""; select.innerHTML
+        = ""; const querySnapshot = await getDocs(collection(db, "colecciones")); querySnapshot.forEach((docItem) => { const data = docItem.data(); lista.innerHTML += `
+        <div style="display:flex;justify-content:space-between;background:#eef3f7;padding:12px;border-radius:8px;margin-top:10px;">
+            <span>${data.nombre}</span>
+            <button onclick="eliminarColeccion('${docItem.id}')" style="background:#ff4d4d;border:none;color:white;padding:5px 10px;border-radius:5px;">Eliminar</button>
+        </div>
+        `; select.innerHTML += `
+        <option value="${data.nombre}">${data.nombre}</option>
+        `; }); };cargarColecciones();
+
+    </script>
+
+</body>

@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>My Style</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Poppins', sans-serif;
+            background: #f6f6f6;
+        }
+        
+        header {
+            background: #e6dbb8;
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: bold;
+        }
+        
+        .logo span {
+            font-family: 'Playfair Display';
+            font-size: 20px;
+        }
+        
+        .icons {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .icon-btn {
+            background: black;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+        
+        .hero {
+            text-align: center;
+            padding: 80px 20px;
+        }
+        
+        .hero h1 {
+            font-family: 'Playfair Display';
+            font-size: 48px;
+            margin: 10px 0;
+        }
+        
+        .hero p {
+            color: #555;
+        }
+        
+        .btn {
+            background: #ff8c42;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 30px;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        
+        .section {
+            text-align: center;
+            padding: 50px;
+        }
+        
+        .products {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 20px;
+            max-width: 1000px;
+            margin: auto;
+        }
+        
+        .product {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            padding: 15px;
+        }
+        
+        .product img {
+            width: 100%;
+            border-radius: 8px;
+        }
+        
+        footer {
+            background: #e6dbb8;
+            text-align: center;
+            padding: 25px;
+            margin-top: 40px;
+        }
+        
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            display: none;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .modal-box {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            text-align: center;
+            width: 300px;
+        }
+        
+        input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+        }
+        
+        .filtro {
+            margin: 5px;
+            padding: 8px 18px;
+            border-radius: 20px;
+            border: none;
+            background: #ddd;
+            cursor: pointer;
+        }
+        
+        .filtro.active {
+            background: #ff8c42;
+            color: white;
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <header>
+
+        <div class="logo">
+            <h2>🛒</h2><span>My Style</span>
+        </div>
+
+        <div class="icons">
+
+            <div class="icon-btn" onclick="openAdmin()">⚙️</div>
+
+            <div class="icon-btn">🛒</div>
+
+        </div>
+
+    </header>
+
+    <section class="hero">
+
+        <h1>Descubre tu estilo único</h1>
+
+        <p>Moda exclusiva y tendencias que te harán brillar</p>
+
+        <button class="btn">Ver Colección</button>
+
+    </section>
+
+    <section class="section">
+
+        <h2>Nuestra Colección</h2>
+
+        <p id="no-products">No hay productos disponibles</p>
+
+        <div id="filtrosColecciones"></div>
+
+        <div id="products" class="products"></div>
+
+    </section>
+
+    <footer>
+
+        <h3>🛒 My Style</h3>
+
+        <p>© 2024 My Style. Todos los derechos reservados.</p>
+
+    </footer>
+
+    <!-- LOGIN ADMIN -->
+
+    <div class="modal" id="adminModal">
+
+        <div class="modal-box">
+
+            <h3>Acceso Administrador</h3>
+
+            <input type="password" id="adminPass" placeholder="Contraseña">
+
+            <button class="btn" onclick="loginAdmin()">Entrar</button>
+
+        </div>
+
+    </div>
+
+    <script>
+        const ADMIN_PASSWORD = "#@MyStyle20@#";
+
+        function openAdmin() {
+
+            document.getElementById("adminModal").style.display = "flex";
+
+        }
+
+        function loginAdmin() {
+
+            const pass = document.getElementById("adminPass").value;
+
+            if (pass === ADMIN_PASSWORD) {
+
+                window.location = "admin.html";
+
+            } else {
+
+                alert("Contraseña incorrecta");
+
+            }
+
+        }
+    </script>
+
+    <script type="module">
+
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js"; import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js"; const firebaseConfig = { apiKey: "AIzaSyCCDSrE_hWvYYgjNwTX85leeU3vHBLBJsY",
+        authDomain: "stylishsteps-10fc4.firebaseapp.com", projectId: "stylishsteps-10fc4", storageBucket: "stylishsteps-10fc4.firebasestorage.app", messagingSenderId: "32645603346", appId: "1:32645603346:web:ae022c525a85aaf7ad38cb" }; const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app); let productos = []; async function cargarProductos(){ const contenedor = document.getElementById("products"); const texto = document.getElementById("no-products"); contenedor.innerHTML = ""; const querySnapshot =
+        await getDocs(collection(db,"productos")); if(querySnapshot.empty){ texto.style.display="block"; return; } texto.style.display="none"; productos = []; querySnapshot.forEach((docItem)=>{ const data = docItem.data(); productos.push(data); }); mostrarProductos(productos);
+        };async function cargarFiltros(){ const contenedor = document.getElementById("filtrosColecciones"); contenedor.innerHTML=`
+        <button class="filtro active" onclick="filtrar('Todos', event)">Todos</button>`; const querySnapshot = await getDocs(collection(db,"colecciones")); querySnapshot.forEach((docItem)=>{ const data = docItem.data(); contenedor.innerHTML+=`
+        <button class="filtro" onclick="filtrar('${data.nombre}', event)">
+        ${data.nombre}
+        </button>`; }); }; function mostrarProductos(lista){ const contenedor = document.getElementById("products"); contenedor.innerHTML=""; lista.forEach(p=>{ contenedor.innerHTML+=`
+
+        <div class="product">
+
+            <img src="${p.imagenes ? p.imagenes[0] : 'https://via.placeholder.com/300'}" alt="${p.nombre}">
+
+            <h3>${p.nombre}</h3>
+
+            <p>S/ ${p.precio}</p>
+
+            <button class="btn" onclick="comprar('${p.nombre}','${p.precio}')">
+Comprar
+</button>
+
+        </div>
+
+        `; }); } async function cargarFiltros(){ const contenedor = document.getElementById("filtrosColecciones"); contenedor.innerHTML=`
+
+        <button class="filtro active" onclick="filtrar('Todos', event)">Todos</button>`; const querySnapshot = await getDocs(collection(db,"colecciones")); querySnapshot.forEach((docItem)=>{ const data = docItem.data(); contenedor.innerHTML+=`
+        <button class="filtro" onclick="filtrar('${data.nombre}',event)"> ${data.nombre} </button> `; }); } window.comprar=function(nombre,precio ){ const telefono="51912492458"; const mensaje=`Hola quiero comprar: Producto: ${nombre} Precio: S/ ${precio}
+        `; const url=`https://wa.me/${telefono}?text=${encodeURIComponent(mensaje)}`; window.open(url); }, cargarProductos(); cargarFiltros(); window.filtrar = function(nombre,event){ document.querySelectorAll(".filtro").forEach(b=>{ b.classList.remove("active");
+        }); event.target.classList.add("active"); if(nombre==="Todos"){ mostrarProductos(productos); return; } const filtrados = productos.filter(p=>p.coleccion===nombre); mostrarProductos(filtrados); };
+
+    </script>
+</body>
+
+</html>
