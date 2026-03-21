@@ -200,22 +200,22 @@
         <h2>Configuración de la Tienda</h2>
 
         <label>Nombre de la Tienda</label>
-        <input id="nombreTienda">
+        <input type="text" id="nombreTienda">
 
         <label>Texto Bienvenida</label>
-        <input id="bienvenida">
-
-        <label>WhatsApp</label>
-        <input id="whatsapp">
-
-        <label>Moneda</label>
-        <input id="moneda">
+        <input type="text" id="bienvenida">
 
         <label>Subtitulo</label>
-        <input id="subtitulo">
+        <input type="text" id="subtitulo">
 
         <label>Descripción</label>
-        <input id="descripcion">
+        <input type="text" id="descripcion">
+
+        <label>WhatsApp</label>
+        <input type="text" id="whatsapp">
+
+        <label>Moneda</label>
+        <input type="text" id="moneda">
 
         <button class="save-btn" onclick="guardarConfig()">Guardar Configuración</button>
 
@@ -327,8 +327,15 @@ Guardar Configuración de Envío
         <label>Colección</label>
         <select id="coleccionProducto"></select>
 
+        <label>Visibilidad del Stock</label>
+        <select id="visibilidadStock">
+    <option value="cantidad">Mostrar stock con cantidad</option>
+    <option value="disponible">Mostrar solo "Disponible"</option>
+    <option value="oculto">Ocultar stock</option>
+</select>
+
         <label>Stock</label>
-        <input id="stockProducto">
+        <input id="stockProducto" type="number" placeholder="Cantidad en stock">
 
         <label>Imágenes (URL separadas por coma)</label>
         <input id="imagenesProducto">
@@ -336,10 +343,27 @@ Guardar Configuración de Envío
         <label>Tallas</label>
         <input id="tallasProducto">
 
+        <label>Colores</label>
+
+        <div id="listaColores"></div>
+
+        <button type="button" onclick="agregarColor()" style="
+margin-top:10px;
+padding:10px;
+border-radius:10px;
+border:none;
+background:#ff8c42;
+color:white;
+cursor:pointer;
+">
++ Agregar Color
+</button>
+
+
         <label>Descripción</label>
         <textarea id="descripcionProducto"></textarea>
 
-        <button class="save-btn" onclick="crearProducto()" const coleccion=d ocument.getElementById( "coleccionProducto").value; if(!coleccion){ alert( "Primero crea una colección"); return; }>Crear Producto</button>
+        <button class="save-btn" onclick="crearProducto()">Crear Producto</button>
 
     </div>
 
@@ -348,27 +372,42 @@ Guardar Configuración de Envío
 
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js"; import { getFirestore, collection, addDoc, getDocs, doc, setDoc, getDoc, deleteDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js"; const
         firebaseConfig = { apiKey: "AIzaSyDNeN0AIcXw0aAiwc6S7472y7YMjHzbV94", authDomain: "tienda-virtual-883ef.firebaseapp.com", databaseURL: "https://tienda-virtual-883ef-default-rtdb.firebaseio.com", projectId: "tienda-virtual-883ef", storageBucket:"tienda-virtual-883ef.firebasestorage.app",
-        messagingSenderId: "871120614985", appId: "1:871120614985:web:0274d91497b7f1e3d33198" }; const app = initializeApp(firebaseConfig); const db = getFirestore(app); async function cargarConfig(){ const docRef = doc(db,"configuracion","tienda"); const
-        snap = await getDoc(docRef); if(snap.exists()){ const data = snap.data(); document.getElementById("nombreTienda").value = data.nombre || ""; document.getElementById("bienvenida").value = data.bienvenida || ""; document.getElementById("whatsapp").value
-        = data.whatsapp || ""; document.getElementById("moneda").value = data.moneda || ""; document.getElementById("subtitulo").value = data.subtitulo || ""; document.getElementById("descripcion").value = data.descripcion || ""; } } cargarConfig();window.guardarConfig
-        = async function(){ await setDoc(doc(db,"configuracion","tienda"),{ nombre:document.getElementById("nombreTienda").value, bienvenida:document.getElementById("bienvenida").value, whatsapp:document.getElementById("whatsapp").value, moneda:document.getElementById("moneda").value,
-        subtitulo:document.getElementById("subtitulo").value, descripcion:document.getElementById("descripcion").value }); alert("Configuración guardada"); }; let plantillaSeleccionada="domicilio"; window.guardarEnvio = async function(){ await setDoc(doc(db,"configuracion_envio","envio"),{
-        tipo:plantillaSeleccionada, agencia:document.getElementById("nombreAgencia").value }); alert("Configuración de envío guardada"); };window.crearColeccion = async function(){ const nombre = document.getElementById("nombreColeccion").value; if(nombre.trim()
-        === "") return alert("Escribe un nombre"); await addDoc(collection(db,"colecciones"),{ nombre }); alert("Colección creada"); document.getElementById("nombreColeccion").value = ""; cargarColecciones(); }; window.crearProducto = async function(){
-        await addDoc(collection(db,"productos"),{ nombre:document.getElementById("nombreProducto").value, precio: parseFloat(document.getElementById("precioProducto").value) || 0, codigo:document.getElementById("codigoProducto").value, coleccion:document.getElementById("coleccionProducto").value,
-        stock: parseInt(document.getElementById("stockProducto").value) || 0, imagenes:document.getElementById("imagenesProducto") .value.split(",").map(i => i.trim()), tallas:document.getElementById("tallasProducto").value, descripcion:document.getElementById("descripcionProducto").value
-        }); alert("Producto creado"); document.getElementById("nombreProducto").value = ""; document.getElementById("precioProducto").value = ""; document.getElementById("codigoProducto").value = ""; document.getElementById("stockProducto").value = "";
-        document.getElementById("imagenesProducto").value = ""; document.getElementById("tallasProducto").value = ""; document.getElementById("descripcionProducto").value = ""; }; window.closePanel=function(){ window.location="index.html"; }; window.seleccionarPlantilla
-        = function(tipo, elemento){ plantillaSeleccionada = tipo; document.querySelectorAll(".plantilla").forEach(p=>{ p.classList.remove("active"); }); elemento.classList.add("active"); }; window.eliminarColeccion = async function(id){ await deleteDoc(doc(db,"colecciones",id));
-        alert("Colección eliminada"); cargarColecciones(); }; async function cargarColecciones() { const lista = document.getElementById("listaColecciones"); const select = document.getElementById("coleccionProducto"); lista.innerHTML = ""; select.innerHTML
-        = ""; const querySnapshot = await getDocs(collection(db, "colecciones")); querySnapshot.forEach((docItem) => { const data = docItem.data(); lista.innerHTML += `
+        messagingSenderId: "871120614985", appId: "1:871120614985:web:0274d91497b7f1e3d33198" }; const app = initializeApp(firebaseConfig); const db = getFirestore(app); async function cargarConfig(){ const snap = await getDoc(doc(db,"configuracion","datos"));
+        if(snap.exists()){ const data = snap.data(); document.getElementById("nombreTienda").value = data.nombre || ""; document.getElementById("bienvenida").value = data.bienvenida || ""; document.getElementById("subtitulo").value = data.subtitulo ||
+        ""; document.getElementById("descripcion").value = data.descripcion || ""; document.getElementById("moneda").value = data.moneda || ""; document.getElementById("whatsapp").value = data.whatsapp || ""; } } cargarConfig(); window.guardarConfig =
+        async function(){ await setDoc(doc(db,"configuracion","datos"),{ nombre: document.getElementById("nombreTienda").value, bienvenida: document.getElementById("bienvenida").value, subtitulo: document.getElementById("subtitulo").value, descripcion:
+        document.getElementById("descripcion").value, moneda: document.getElementById("moneda").value, whatsapp: document.getElementById("whatsapp").value }); alert("Configuración guardada 🔥"); }; let plantillaSeleccionada="domicilio"; window.guardarEnvio
+        = async function(){ await setDoc(doc(db,"configuracion_envio","envio"),{ tipo:plantillaSeleccionada, agencia:document.getElementById("nombreAgencia").value }); alert("Configuración de envío guardada"); };window.crearColeccion = async function(){
+        const nombre = document.getElementById("nombreColeccion").value; if(nombre.trim() === "") return alert("Escribe un nombre"); await addDoc(collection(db,"colecciones"),{ nombre }); alert("Colección creada"); document.getElementById("nombreColeccion").value
+        = ""; cargarColecciones(); }; window.crearProducto = async function(){ const nombre = document.getElementById("nombreProducto").value; const precio = document.getElementById("precioProducto").value; const codigo = document.getElementById("codigoProducto").value;
+        const coleccion = document.getElementById("coleccionProducto").value; const stock = document.getElementById("stockProducto").value; const imagenes = document.getElementById("imagenesProducto").value; const tallas = document.getElementById("tallasProducto").value;
+        const descripcion = document.getElementById("descripcionProducto").value; const visibilidadStock = document.getElementById("visibilidadStock").value; const colores = []; document.querySelectorAll("#listaColores .color-item").forEach(item => {
+        const nombreColor = item.querySelector(".color-nombre").value; const valorColor = item.querySelector(".color-valor").value; if(nombreColor){ colores.push({ nombre: nombreColor, valor: valorColor }); } }); if(!nombre || !precio){ alert("Completa los campos" ); 
+        return; } await addDoc(collection(db, "productos"), { nombre, precio, codigo, coleccion, stock, imagenes, tallas, descripcion, colores, visibilidadStock }); alert("Producto creado 🔥"); }; document.getElementById("listaColores").innerHTML
+        = ""; window.closePanel=function(){ window.location="index.html"; }; window.seleccionarPlantilla = function(tipo, elemento){ plantillaSeleccionada = tipo; document.querySelectorAll(".plantilla").forEach(p=>{ p.classList.remove("active"); }); elemento.classList.add("active");
+        }; window.eliminarColeccion = async function(id){ await deleteDoc(doc(db,"colecciones",id)); alert("Colección eliminada"); cargarColecciones(); }; async function cargarColecciones() { const lista = document.getElementById("listaColecciones");
+        const select = document.getElementById("coleccionProducto"); lista.innerHTML = ""; select.innerHTML = ""; const querySnapshot = await getDocs(collection(db, "colecciones")); querySnapshot.forEach((docItem) => { const data = docItem.data(); lista.innerHTML
+        += `
         <div style="display:flex;justify-content:space-between;background:#eef3f7;padding:12px;border-radius:8px;margin-top:10px;">
             <span>${data.nombre}</span>
             <button onclick="eliminarColeccion('${docItem.id}')" style="background:#ff4d4d;border:none;color:white;padding:5px 10px;border-radius:5px;">Eliminar</button>
         </div>
         `; select.innerHTML += `
         <option value="${data.nombre}">${data.nombre}</option>
-        `; }); };cargarColecciones();
+        `; }); };cargarColecciones(); window.agregarColor = function(){ const contenedor = document.getElementById("listaColores"); const div = document.createElement("div"); div.className = "color-item"; div.style = ` display:flex; align-items:center; gap:10px;
+        margin-top:10px; background:#f5f5f5; padding:10px; border-radius:10px; `; div.innerHTML = `
+        <input type="color" class="color-valor" style="width:50px;height:40px;border:none;">
+
+        <input type="text" class="color-nombre" placeholder="Nombre del color" style="flex:1;">
+
+        <button onclick="this.parentElement.remove()" style="
+            background:#ff4d4d;
+            color:white;
+            border:none;
+            padding:8px 12px;
+            border-radius:8px;
+            cursor:pointer;
+        ">Quitar</button> `; contenedor.appendChild(div); };
 
     </script>
 
